@@ -90,6 +90,7 @@
 			// alert("No se ha encontrado la ciudad introducida.");
 			estado.classList.add('variant-soft-error');
 			estado.classList.add('p-2');
+			estado.classList.add('mt-2');
 			/* city.classList.remove('variant-soft'); */
 			estado.innerHTML = '<p>No se ha encontrado la ciudad.</p>';
 		}
