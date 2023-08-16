@@ -298,8 +298,7 @@
 	}
 
 	#aside {
-		max-width: 70vw;
-		min-width: 35vw;
+		width: 100%;
 		position: absolute;
 		top: 50%;
 		left: 50%;
@@ -316,6 +315,8 @@
 		place-items: center;
 		position: absolute;
 		top: 20%;
+		max-width: 70vw;
+		min-width: 35vw;
 		width: 100%;
 	}
 </style>
