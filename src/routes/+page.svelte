@@ -294,5 +294,6 @@
 		display: grid;
 		place-items: center;
 		text-align: center;
+		gap: 10px;
 	}
 </style>
