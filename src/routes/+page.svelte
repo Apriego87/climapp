@@ -302,9 +302,10 @@
 		display: grid;
 		place-items: center;
 		text-align: center;
-		margin-top: -5vh;
+		margin-top: -10vh;
 		gap: 10px;
 		opacity: 1;
+		align-self: center;
 	}
 
 	#alerta {
