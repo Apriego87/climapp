@@ -68,6 +68,7 @@
 		estado.classList.remove('variant-soft-error');
 		estado.classList.add('p-2');
 		estado.innerHTML = 'Buscando...';
+		visible = false
 
 		try {
 			const res = await fetch(`https://api.api-ninjas.com/v1/geocoding?city=${city.value}`, {
