@@ -299,13 +299,10 @@
 
 	#aside {
 		width: 100%;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
 		display: grid;
 		place-items: center;
 		text-align: center;
+		margin-top: -5vh;
 		gap: 10px;
 		opacity: 1;
 	}
@@ -314,9 +311,10 @@
 		display: grid;
 		place-items: center;
 		position: absolute;
-		top: 20%;
+		top: 0;
 		max-width: 70vw;
 		min-width: 35vw;
 		width: 100%;
+		height: 50vh;
 	}
 </style>
