@@ -8,7 +8,8 @@
 
 	let visible = false;
 	let msg1 = 'Ésta es una aplicación para comprobar el tiempo.';
-	let msg2 = 'Simplemente introduce el nombre de la ciudad que quieras buscar, y pulsa en el icono de la izquierda :)'
+	let msg2 =
+		'Simplemente introduce el nombre de la ciudad que quieras buscar, y pulsa en el icono de la izquierda :)';
 
 	setTimeout(() => {
 		visible = true;
@@ -68,7 +69,7 @@
 		estado.classList.remove('variant-soft-error');
 		estado.classList.add('p-2');
 		estado.innerHTML = 'Buscando...';
-		visible = false
+		visible = false;
 
 		try {
 			const res = await fetch(`https://api.api-ninjas.com/v1/geocoding?city=${city.value}`, {
@@ -138,22 +139,29 @@
 <main>
 	<div id="cont" class="grid place-items-center h-screen">
 		{#if visible}
-			<aside id="aside" class="alert variant-soft text-sm" in:fade out:scale|local>
-				<!-- Message -->
-				<div class="alert-message">
-					<h3 class="h3">Hola!</h3>
-					<p>{msg1}</p>
-					<p>{msg2}</p>
-				</div>
-				<!-- Actions -->
-				<div class="alert-actions">
-					<button type="button" class="btn variant-filled" on:click={() => (visible = false)}
-						>Que sí pesao</button
-					>
-				</div>
-			</aside>
+			<div class="grid place-items-center w-screen">
+				<aside
+					id="aside"
+					class="alert variant-soft text-sm place-self-center"
+					in:fade
+					out:scale|local
+				>
+					<!-- Message -->
+					<div class="alert-message">
+						<h3 class="h3">Hola!</h3>
+						<p>{msg1}</p>
+						<p>{msg2}</p>
+					</div>
+					<!-- Actions -->
+					<div class="alert-actions">
+						<button type="button" class="btn variant-filled" on:click={() => (visible = false)}
+							>Que sí pesao</button
+						>
+					</div>
+				</aside>
+			</div>
 		{/if}
-		<div id="tarjeta" class="card p-4 variant-soft max-w-md grid place-items-center gap-10">
+		<div id="tarjeta" class="card p-4 variant-soft max-w-md grid place-items-center gap-10 absolute">
 			<div id="header" class="header p-4">
 				<div id="buscador" class="iconHeader" on:click={getCoord}>
 					<FaMapMarkerAlt />
