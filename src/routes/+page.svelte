@@ -88,11 +88,9 @@
 			contenido = true;
 		} catch (Error) {
 			contenido = false;
-			// alert("No se ha encontrado la ciudad introducida.");
 			estado.classList.add('variant-soft-error');
 			estado.classList.add('p-2');
 			estado.classList.add('mt-2');
-			/* city.classList.remove('variant-soft'); */
 			estado.innerHTML = '<p>No se ha encontrado la ciudad.</p>';
 		}
 	}
@@ -107,15 +105,10 @@
 				}
 			}
 		);
-
-		/* ciudad.classList.add('variant-soft-success');
-		ciudad.classList.remove('variant-soft-error');
-		ciudad.classList.remove('variant-soft'); */
 		estado.innerHTML = '';
 
 		que = await res.json();
 
-		/* estado.classList.add('variant-soft'); */
 		estado.classList.remove('variant-soft-error');
 		estado.classList.remove('mt-2');
 
@@ -176,10 +169,8 @@
 				</h1>
 				<div class="iconHeader">
 					<LightSwitch />
-					<!-- <FaBars /> -->
 				</div>
 				<p id="label"><label class="w-full text-center rounded-xl" for="estado" id="estado" /></p>
-				<!-- <button id="botonBuscar">Buscar</button> -->
 			</div>
 
 			{#if contenido}
@@ -226,32 +217,13 @@
 	</div>
 </main>
 
-<!-- <MediaQuery query="(min-width: 1281px)" let:matches>
-	{#if matches}
-	<div class="root default">
-		default
-	</div>
-	{/if}
-</MediaQuery> -->
-
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
-
-	/* @font-face {
-		font-family: 'Raleway', sans-serif;
-		font-style: normal;
-		font-weight: 400;
-		src: local('Raleway'), local('Raleway'),
-			url(https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap) format('woff2');
-		unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
-			U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-	} */
 
 	#header {
 		display: grid;
 		place-items: center;
 		grid-template-columns: 1fr 2fr 1fr;
-		/* padding: 0; */
 	}
 
 	#header > div {
@@ -269,11 +241,6 @@
 		width: 100%;
 		height: 100%;
 	}
-
-	/* :global(img.dark){
-		-webkit-filter: invert(1);
-		filter: invert(1);
-	} */
 
 	.resume {
 		display: grid;
