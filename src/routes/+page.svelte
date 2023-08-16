@@ -116,6 +116,7 @@
 
 		/* estado.classList.add('variant-soft'); */
 		estado.classList.remove('variant-soft-error');
+		estado.classList.remove('mt-2');
 
 		let icono = document.getElementById('iconoTiempo');
 		let ico = que.current.weather[0].icon;
