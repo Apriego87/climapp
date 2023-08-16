@@ -139,25 +139,27 @@
 <main>
 	<div id="cont" class="grid place-items-center h-screen">
 		{#if visible}
-			<aside
-				id="aside"
-				class="alert variant-soft text-sm place-self-center"
-				in:fade
-				out:scale|local
-			>
-				<!-- Message -->
-				<div class="alert-message">
-					<h3 class="h3">Hola!</h3>
-					<p>{msg1}</p>
-					<p>{msg2}</p>
-				</div>
-				<!-- Actions -->
-				<div class="alert-actions">
-					<button type="button" class="btn variant-filled" on:click={() => (visible = false)}
-						>Que sí pesao</button
-					>
-				</div>
-			</aside>
+			<div id="alerta">
+				<aside
+					id="aside"
+					class="alert variant-soft text-sm place-self-center"
+					in:fade
+					out:scale|local
+				>
+					<!-- Message -->
+					<div class="alert-message">
+						<h3 class="h3">Hola!</h3>
+						<p>{msg1}</p>
+						<p>{msg2}</p>
+					</div>
+					<!-- Actions -->
+					<div class="alert-actions">
+						<button type="button" class="btn variant-filled" on:click={() => (visible = false)}
+							>Que sí pesao</button
+						>
+					</div>
+				</aside>
+			</div>
 		{/if}
 		<div id="tarjeta" class="card p-4 variant-soft max-w-md grid place-items-center gap-10">
 			<div id="header" class="header p-4">
@@ -299,11 +301,21 @@
 		max-width: 70vw;
 		min-width: 35vw;
 		position: absolute;
-		top: 5vw;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
 		display: grid;
 		place-items: center;
 		text-align: center;
 		gap: 10px;
 		opacity: 1;
+	}
+
+	#alerta {
+		display: grid;
+		place-items: center;
+		position: absolute;
+		top: 20%;
+		width: 100%;
 	}
 </style>
