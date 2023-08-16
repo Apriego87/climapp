@@ -135,7 +135,7 @@
 <main>
 	<div id="cont" class="grid place-items-center h-screen">
 		{#if visible}
-			<aside id="aside" class="alert variant-soft" in:fade out:scale|local>
+			<aside id="aside" class="alert variant-soft text-sm" in:fade out:scale|local>
 				<!-- Message -->
 				<div class="alert-message">
 					<h3 class="h3">Hola!</h3>
@@ -290,7 +290,7 @@
 		max-width: 70vw;
 		min-width: 35vw;
 		position: absolute;
-		top: 10vw;
+		top: 5vw;
 		display: grid;
 		place-items: center;
 		text-align: center;
