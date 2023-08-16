@@ -139,29 +139,27 @@
 <main>
 	<div id="cont" class="grid place-items-center h-screen">
 		{#if visible}
-			<div class="grid place-items-center w-screen">
-				<aside
-					id="aside"
-					class="alert variant-soft text-sm place-self-center"
-					in:fade
-					out:scale|local
-				>
-					<!-- Message -->
-					<div class="alert-message">
-						<h3 class="h3">Hola!</h3>
-						<p>{msg1}</p>
-						<p>{msg2}</p>
-					</div>
-					<!-- Actions -->
-					<div class="alert-actions">
-						<button type="button" class="btn variant-filled" on:click={() => (visible = false)}
-							>Que sí pesao</button
-						>
-					</div>
-				</aside>
-			</div>
+			<aside
+				id="aside"
+				class="alert variant-soft text-sm place-self-center"
+				in:fade
+				out:scale|local
+			>
+				<!-- Message -->
+				<div class="alert-message">
+					<h3 class="h3">Hola!</h3>
+					<p>{msg1}</p>
+					<p>{msg2}</p>
+				</div>
+				<!-- Actions -->
+				<div class="alert-actions">
+					<button type="button" class="btn variant-filled" on:click={() => (visible = false)}
+						>Que sí pesao</button
+					>
+				</div>
+			</aside>
 		{/if}
-		<div id="tarjeta" class="card p-4 variant-soft max-w-md grid place-items-center gap-10 absolute">
+		<div id="tarjeta" class="card p-4 variant-soft max-w-md grid place-items-center gap-10">
 			<div id="header" class="header p-4">
 				<div id="buscador" class="iconHeader" on:click={getCoord}>
 					<FaMapMarkerAlt />
