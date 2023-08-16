@@ -137,12 +137,12 @@
 </script>
 
 <main>
-	<div id="cont" class="grid place-items-center h-screen">
+	<div id="cont" class="grid place-items-center max-w-md h-screen">
 		{#if visible}
 			<div id="alerta">
 				<aside
 					id="aside"
-					class="alert variant-soft text-sm place-self-center"
+					class="alert variant-soft text-sm max-w-md grid place-items-center"
 					in:fade
 					out:scale|local
 				>
@@ -298,14 +298,9 @@
 	}
 
 	#aside {
-		width: 100%;
-		display: grid;
-		place-items: center;
+		width: 70%;
 		text-align: center;
 		margin-top: -10vh;
-		gap: 10px;
-		opacity: 1;
-		align-self: center;
 	}
 
 	#alerta {
@@ -313,9 +308,8 @@
 		place-items: center;
 		position: absolute;
 		top: 0;
-		max-width: 70vw;
+		max-width: 100%;
 		min-width: 35vw;
-		width: 100%;
 		height: 50vh;
 	}
 </style>
