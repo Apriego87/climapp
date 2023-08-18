@@ -130,12 +130,12 @@
 </script>
 
 <main>
-	<div id="cont" class="grid place-items-center max-w-md h-screen">
+	<div id="cont" class="grid place-items-center max-w-full h-screen">
 		{#if visible}
 			<div id="alerta">
 				<aside
 					id="aside"
-					class="alert variant-soft text-sm max-w-full grid place-items-center"
+					class="alert variant-soft text-sm max-w-md grid place-items-center"
 					in:fade
 					out:scale|local
 				>
