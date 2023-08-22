@@ -130,7 +130,7 @@
 </script>
 
 <main>
-	<div id="cont" class="grid place-items-center max-w-full h-screen">
+	<div id="cont" class="grid p-4 place-items-center max-w-full h-screen">
 		{#if visible}
 			<div id="alerta">
 				<aside
@@ -156,8 +156,8 @@
 		{/if}
 		<div id="tarjeta" class="card p-4 variant-soft max-w-md grid place-items-center gap-10">
 			<div id="header" class="header p-4">
-				<div id="buscador" class="iconHeader" on:click={getCoord}>
-					<FaMapMarkerAlt />
+				<div id="toggle" class="iconHeader grid place-self-center -ml-6">
+					<LightSwitch />
 				</div>
 				<h1 class="text-2xl">
 					<input
@@ -167,9 +167,10 @@
 						id="ciudad"
 					/>
 				</h1>
-				<div class="iconHeader">
-					<LightSwitch />
+				<div id="buscador" class="iconHeader" on:click={getCoord}>
+					<FaMapMarkerAlt />
 				</div>
+
 				<p id="label"><label class="w-full text-center rounded-xl" for="estado" id="estado" /></p>
 			</div>
 
@@ -228,13 +229,6 @@
 
 	#header > div {
 		height: auto;
-		display: grid;
-		place-items: center;
-	}
-
-	.iconHeader {
-		width: 25%;
-		height: 25%;
 	}
 
 	:global(img) {
@@ -254,6 +248,15 @@
 
 	#buscador {
 		cursor: pointer;
+		width: 25%;
+		height: 25%;
+		min-width: 24px;
+		min-height: 32px;
+	}
+
+	#ciudad {
+		min-width: 30vw;
+		max-width: 35vw;
 	}
 
 	#label {
@@ -265,7 +268,9 @@
 	}
 
 	#aside {
-		width: 70%;
+		width: auto;
+		max-width: 75%;
+		height: auto;
 		text-align: center;
 		margin-top: -10vh;
 	}
