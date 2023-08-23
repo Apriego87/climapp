@@ -1,14 +1,13 @@
-<script type="js">
-	import Alert from "./components/Alert.svelte";
-	import Resume from './components/Resume.svelte';
+<script>
+	import FaMapMarkerAlt from 'svelte-icons/fa/FaMapMarkerAlt.svelte';
+	import { LightSwitch } from '@skeletonlabs/skeleton';
+	/* import { fade, scale } from 'svelte/transition'; */
 
-	let visible = false;
-
-	/* import { fade, scale } from 'svelte/transition';
-	
-
+	let tiempo = '';
+	let temp = '';
 	export let visible;
 
+	/* 
 	let msg1 = 'Ésta es una aplicación para comprobar el tiempo.';
 	let msg2 =
 		'Simplemente introduce el nombre de la ciudad que quieras buscar, y pulsa en el icono de la izquierda :)';
@@ -16,16 +15,6 @@
 	setTimeout(() => {
 		visible = true;
 	}, 1000); */
-
-	/* import FaMapMarkerAlt from 'svelte-icons/fa/FaMapMarkerAlt.svelte';
-	import { LightSwitch } from '@skeletonlabs/skeleton';
-	
-
-	let tiempo = '';
-	let temp = '';
-
-	
-	
 
 	let minMaxHoy = '';
 	let minMaxTom = '';
@@ -138,85 +127,77 @@
 		minMaxSig =
 			Math.round(que.daily[2].temp.max) + 'º' + ' / ' + Math.round(que.daily[2].temp.min) + 'º';
 		tiempo = capitalizeFirstLetter(translateDescription(que.current.weather[0].main));
-	} */
+	}
 </script>
 
 <main>
-	<div id="cont" class="grid p-4 place-items-center max-w-full h-screen">
-		<Alert />
-		<Resume bind:value={visible} />
-		<!-- <div id="tarjeta" class="card p-4 variant-soft max-w-md grid place-items-center gap-10">
-			<div id="header" class="header p-4">
-				<div id="toggle" class="iconHeader grid place-self-center -ml-6">
-					<LightSwitch />
-				</div>
-				<div class="">
-					<h1 class="text-2xl">
-						<input
-							class="variant-soft w-full text-center rounded-lg"
-							type="text"
-							name="ciudad"
-							id="ciudad"
-						/>
-					</h1>
-				</div>
-				<div id="buscador" class="iconHeader -mr-6" on:click={getCoord}>
-					<FaMapMarkerAlt />
-				</div>
+    <div id="tarjeta" class="card p-4 variant-soft max-w-md grid place-items-center gap-10">
+        <div id="header" class="header p-4">
+            <div id="toggle" class="iconHeader grid place-self-center -ml-6">
+                <LightSwitch />
+            </div>
+            <div class="">
+                <h1 class="text-2xl">
+                    <input
+                        class="variant-soft w-full text-center rounded-lg"
+                        type="text"
+                        name="ciudad"
+                        id="ciudad"
+                    />
+                </h1>
+            </div>
+            <div id="buscador" class="iconHeader -mr-6" on:click={getCoord}>
+                <FaMapMarkerAlt />
+            </div>
 
-				<p id="label"><label class="w-full text-center rounded-xl" for="estado" id="estado" /></p>
-			</div>
+            <p id="label"><label class="w-full text-center rounded-xl" for="estado" id="estado" /></p>
+        </div>
 
-			{#if contenido}
-				<div class="grid place-items-center grid-cols-2">
-					<div class="variant-soft rounded-full">
-						<img id="iconoTiempo" src="" alt="" />
-					</div>
-					<div class="grid place-items-center">
-						<div class="grid">
-							<p class="text-4xl">{temp}</p>
-						</div>
-						<p class="text-lg">{tiempo}</p>
-					</div>
-				</div>
+        {#if contenido}
+            <div class="grid place-items-center grid-cols-2">
+                <div class="variant-soft rounded-full">
+                    <img id="iconoTiempo" src="" alt="" />
+                </div>
+                <div class="grid place-items-center">
+                    <div class="grid">
+                        <p class="text-4xl">{temp}</p>
+                    </div>
+                    <p class="text-lg">{tiempo}</p>
+                </div>
+            </div>
 
-				<div class="grid w-3/4 text-xl gap-2 p-4">
-					<div class="resume">
-						<div class="grid">
-							<p>Hoy</p>
-						</div>
-						<div class="temp">
-							<p>{minMaxHoy}</p>
-						</div>
-					</div>
-					<div class="resume">
-						<div>
-							<p>Mañana</p>
-						</div>
-						<div class="temp">
-							<p>{minMaxTom}</p>
-						</div>
-					</div>
-					<div class="resume">
-						<div>
-							<p>{siguiente}</p>
-						</div>
-						<div class="temp">
-							<p>{minMaxSig}</p>
-						</div>
-					</div>
-				</div>
-			{/if}
-		</div> -->
-	</div>
+            <div class="grid w-3/4 text-xl gap-2 p-4">
+                <div class="resume">
+                    <div class="grid">
+                        <p>Hoy</p>
+                    </div>
+                    <div class="temp">
+                        <p>{minMaxHoy}</p>
+                    </div>
+                </div>
+                <div class="resume">
+                    <div>
+                        <p>Mañana</p>
+                    </div>
+                    <div class="temp">
+                        <p>{minMaxTom}</p>
+                    </div>
+                </div>
+                <div class="resume">
+                    <div>
+                        <p>{siguiente}</p>
+                    </div>
+                    <div class="temp">
+                        <p>{minMaxSig}</p>
+                    </div>
+                </div>
+            </div>
+        {/if}
+    </div>
 </main>
 
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
-
-
-
-	/* #header {
+    #header {
 		display: grid;
 		place-items: center;
 		grid-template-columns: 1fr 2fr 1fr;
@@ -277,5 +258,5 @@
 		max-width: 100%;
 		min-width: 35vw;
 		height: 50vh;
-	} */
+	}
 </style>
