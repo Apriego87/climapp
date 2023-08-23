@@ -1,21 +1,19 @@
 <script type="js">
 	import FaMapMarkerAlt from 'svelte-icons/fa/FaMapMarkerAlt.svelte';
 	import { LightSwitch } from '@skeletonlabs/skeleton';
-	/* import { fade, scale } from 'svelte/transition'; */
+	import fetchStore from '../fetch.js'
+
+	export let visible;
+	export let detailed;
+
+	
+	let url = ''
+
+	const [data, loading, error, get] = fetchStore(url)
+
 
 	let tiempo = '';
 	let temp = '';
-	
-	export let visible;
-
-	/* 
-	let msg1 = 'Ésta es una aplicación para comprobar el tiempo.';
-	let msg2 =
-		'Simplemente introduce el nombre de la ciudad que quieras buscar, y pulsa en el icono de la izquierda :)';
-
-	setTimeout(() => {
-		visible = true;
-	}, 1000); */
 
 	let minMaxHoy = '';
 	let minMaxTom = '';
@@ -72,6 +70,7 @@
 		estado.classList.add('p-2');
 		estado.innerHTML = 'Buscando...';
 		visible = false;
+		console.log(visible)
 
 		try {
 			const res = await fetch(`https://api.api-ninjas.com/v1/geocoding?city=${city.value}`, {
@@ -98,7 +97,7 @@
 	}
 
 	async function getClima(lat, long) {
-		const res = await fetch(
+		/* const res = await fetch(
 			`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&units=metric&appid=19dc48a3b6452ccad728e8813e9f2a86`,
 			{
 				method: 'GET',
@@ -106,10 +105,15 @@
 					Accept: 'application/json'
 				}
 			}
-		);
+		); */
 		estado.innerHTML = '';
 
-		que = await res.json();
+		let url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&units=metric&appid=19dc48a3b6452ccad728e8813e9f2a86`
+
+		/* const [data, loading, error, get] = fetchStore(url) */
+		que = JSON.stringify($data, null, 2)
+
+		/* que = await res.json(); */
 
 		estado.classList.remove('variant-soft-error');
 		estado.classList.remove('mt-2');
@@ -132,73 +136,74 @@
 </script>
 
 <main>
-    <div id="tarjeta" class="card p-4 variant-soft max-w-md grid place-items-center gap-10">
-        <div id="header" class="header p-4">
-            <div id="toggle" class="iconHeader grid place-self-center -ml-6">
-                <LightSwitch />
-            </div>
-            <div class="">
-                <h1 class="text-2xl">
-                    <input
-                        class="variant-soft w-full text-center rounded-lg"
-                        type="text"
-                        name="ciudad"
-                        id="ciudad"
-                    />
-                </h1>
-            </div>
-            <div id="buscador" class="iconHeader -mr-6" on:click={getCoord}>
-                <FaMapMarkerAlt />
-            </div>
+	<div id="tarjeta" class="card p-4 variant-soft max-w-md grid place-items-center gap-10">
+		<div id="header" class="header p-4">
+			<div id="toggle" class="iconHeader grid place-self-center -ml-6">
+				<LightSwitch />
+			</div>
+			<div class="">
+				<h1 class="text-2xl">
+					<input
+						class="variant-soft w-full text-center rounded-lg"
+						type="text"
+						name="ciudad"
+						id="ciudad"
+					/>
+				</h1>
+			</div>
+			<div id="buscador" class="iconHeader -mr-6" on:click={getCoord}>
+				<FaMapMarkerAlt />
+			</div>
 
-            <p id="label"><label class="w-full text-center rounded-xl" for="estado" id="estado" /></p>
-        </div>
+			<p id="label"><label class="w-full text-center rounded-xl" for="estado" id="estado" /></p>
+		</div>
 
-        {#if contenido}
-            <div class="grid place-items-center grid-cols-2">
-                <div class="variant-soft rounded-full">
-                    <img id="iconoTiempo" src="" alt="" />
-                </div>
-                <div class="grid place-items-center">
-                    <div class="grid">
-                        <p class="text-4xl">{temp}</p>
-                    </div>
-                    <p class="text-lg">{tiempo}</p>
-                </div>
-            </div>
+		{#if contenido}
+			<div class="grid place-items-center grid-cols-2">
+				<div class="variant-soft rounded-full">
+					<img id="iconoTiempo" src="" alt="" />
+				</div>
+				<div class="grid place-items-center">
+					<div class="grid">
+						<p class="text-4xl">{temp}</p>
+					</div>
+					<p class="text-lg">{tiempo}</p>
+				</div>
+			</div>
 
-            <div class="grid w-3/4 text-xl gap-2 p-4">
-                <div class="resume">
-                    <div class="grid">
-                        <p>Hoy</p>
-                    </div>
-                    <div class="temp">
-                        <p>{minMaxHoy}</p>
-                    </div>
-                </div>
-                <div class="resume">
-                    <div>
-                        <p>Mañana</p>
-                    </div>
-                    <div class="temp">
-                        <p>{minMaxTom}</p>
-                    </div>
-                </div>
-                <div class="resume">
-                    <div>
-                        <p>{siguiente}</p>
-                    </div>
-                    <div class="temp">
-                        <p>{minMaxSig}</p>
-                    </div>
-                </div>
-            </div>
-        {/if}
-    </div>
+			<div class="grid w-3/4 text-xl gap-2 p-4">
+				<div class="resume">
+					<div class="grid">
+						<p>Hoy</p>
+					</div>
+					<div class="temp">
+						<p>{minMaxHoy}</p>
+					</div>
+				</div>
+				<div class="resume">
+					<div>
+						<p>Mañana</p>
+					</div>
+					<div class="temp">
+						<p>{minMaxTom}</p>
+					</div>
+				</div>
+				<div class="resume">
+					<div>
+						<p>{siguiente}</p>
+					</div>
+					<div class="temp">
+						<p>{minMaxSig}</p>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn variant-filled" on:click={() => (detailed = true)}>Hola</button>
+		{/if}
+	</div>
 </main>
 
 <style>
-    #header {
+	#header {
 		display: grid;
 		place-items: center;
 		grid-template-columns: 1fr 2fr 1fr;
@@ -241,23 +246,5 @@
 
 	#tarjeta > * {
 		max-width: 80vw;
-	}
-
-	#aside {
-		width: auto;
-		max-width: 75%;
-		height: auto;
-		text-align: center;
-		margin-top: -10vh;
-	}
-
-	#alerta {
-		display: grid;
-		place-items: center;
-		position: absolute;
-		top: 0;
-		max-width: 100%;
-		min-width: 35vw;
-		height: 50vh;
 	}
 </style>

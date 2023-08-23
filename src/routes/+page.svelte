@@ -1,16 +1,27 @@
 <script type="js">
 	import Alert from './components/Alert.svelte';
+	import Detailed from './components/Detailed.svelte';
 	import Resume from './components/Resume.svelte';
+
+	let visible = false;
+	let detailed = false;
 </script>
 
 <main>
 	<div id="cont" class="grid p-4 place-items-center max-w-full h-screen">
 		<div id="alert">
-			<Alert />
+			<Alert bind:visible />
 		</div>
+		{#if detailed}
+		<div id="detailed">
+			<Detailed bind:detailed />
+			
+		</div>
+		{:else}
 		<div id="busc">
-			<Resume visible />
+			<Resume bind:visible bind:detailed />
 		</div>
+		{/if}
 	</div>
 </main>
 

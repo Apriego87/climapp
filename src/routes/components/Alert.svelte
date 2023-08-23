@@ -40,51 +40,10 @@
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
 
-	#header {
-		display: grid;
-		place-items: center;
-		grid-template-columns: 1fr 2fr 1fr;
-	}
-
-	#header > div {
-		height: auto;
-	}
-
 	:global(img) {
 		width: 100%;
 		height: 100%;
 	}
-
-	.resume {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-	}
-
-	.temp {
-		display: grid;
-		place-items: end;
-	}
-
-	#buscador {
-		cursor: pointer;
-		width: 25%;
-		height: 25%;
-		min-width: 24px;
-		min-height: 32px;
-	}
-
-	#ciudad {
-		min-width: 10px;
-	}
-
-	#label {
-		grid-column: 1 / 4;
-	}
-
-	#tarjeta > * {
-		max-width: 80vw;
-	}
-
 	#aside {
 		width: auto;
 		max-width: 75%;
