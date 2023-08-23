@@ -1,10 +1,11 @@
-<script>
+<script type="js">
 	import FaMapMarkerAlt from 'svelte-icons/fa/FaMapMarkerAlt.svelte';
 	import { LightSwitch } from '@skeletonlabs/skeleton';
 	/* import { fade, scale } from 'svelte/transition'; */
 
 	let tiempo = '';
 	let temp = '';
+	
 	export let visible;
 
 	/* 
