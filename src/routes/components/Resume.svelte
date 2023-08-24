@@ -1,15 +1,21 @@
 <script type="js">
 	import FaMapMarkerAlt from 'svelte-icons/fa/FaMapMarkerAlt.svelte';
 	import { LightSwitch } from '@skeletonlabs/skeleton';
-	import fetchStore from '../fetch.js'
+	import { numero } from '../stores/store.js'
 
 	export let visible;
 	export let detailed;
 
+	let valor;
+
+	numero.subscribe((value) => {
+		valor = value
+	})
+
 	
 	let url = ''
 
-	const [data, loading, error, get] = fetchStore(url)
+	/* const [data, loading, error, get] = fetchStore(url) */
 
 
 	let tiempo = '';
@@ -97,7 +103,7 @@
 	}
 
 	async function getClima(lat, long) {
-		/* const res = await fetch(
+		const res = await fetch(
 			`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&units=metric&appid=19dc48a3b6452ccad728e8813e9f2a86`,
 			{
 				method: 'GET',
@@ -105,33 +111,43 @@
 					Accept: 'application/json'
 				}
 			}
-		); */
+		);
 		estado.innerHTML = '';
 
-		let url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&units=metric&appid=19dc48a3b6452ccad728e8813e9f2a86`
+		/* let url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&units=metric&appid=19dc48a3b6452ccad728e8813e9f2a86` */
 
 		/* const [data, loading, error, get] = fetchStore(url) */
-		que = JSON.stringify($data, null, 2)
+		/* que = JSON.stringify($data, null, 2) */
 
-		/* que = await res.json(); */
+		que = await res.json();
+
+		console.log(valor)
+
+		function actualizar() {
+			numero.update(
+				n => que
+			)
+		}
+
+		actualizar()
 
 		estado.classList.remove('variant-soft-error');
 		estado.classList.remove('mt-2');
 
 		let icono = document.getElementById('iconoTiempo');
-		let ico = que.current.weather[0].icon;
+		let ico = valor.current.weather[0].icon;
 
 		icono.src = `https://openweathermap.org/img/wn/${ico}@2x.png`;
 		console.log(que);
-		temp = Math.round(que.current.temp) + 'º';
+		temp = Math.round(valor.current.temp) + 'º';
 
 		minMaxHoy =
-			Math.round(que.daily[0].temp.max) + 'º' + ' / ' + Math.round(que.daily[0].temp.min) + 'º';
+			Math.round(valor.daily[0].temp.max) + 'º' + ' / ' + Math.round(valor.daily[0].temp.min) + 'º';
 		minMaxTom =
-			Math.round(que.daily[1].temp.max) + 'º' + ' / ' + Math.round(que.daily[1].temp.min) + 'º';
+			Math.round(valor.daily[1].temp.max) + 'º' + ' / ' + Math.round(valor.daily[1].temp.min) + 'º';
 		minMaxSig =
-			Math.round(que.daily[2].temp.max) + 'º' + ' / ' + Math.round(que.daily[2].temp.min) + 'º';
-		tiempo = capitalizeFirstLetter(translateDescription(que.current.weather[0].main));
+			Math.round(valor.daily[2].temp.max) + 'º' + ' / ' + Math.round(valor.daily[2].temp.min) + 'º';
+		tiempo = capitalizeFirstLetter(translateDescription(valor.current.weather[0].main));
 	}
 </script>
 
