@@ -57,7 +57,7 @@
 	main {
 		overflow: auto;
 		width: 100%;
-		height: 25vh;
+		height: auto;
 	}
 
 	img {
