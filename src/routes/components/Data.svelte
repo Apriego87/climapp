@@ -9,6 +9,18 @@
 
 	console.log(valor.lat);
 
+	let d = new Date();
+	let hoy = d.getDay();
+	let dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+
+	let siguiente = dias[hoy + 2];
+
+	if (hoy === 5) {
+		siguiente = dias[0];
+	} else if (hoy === 6) {
+		siguiente = dias[1];
+	}
+
 	function translateDescription(description) {
 		var xhttp = new XMLHttpRequest();
 		xhttp.open(
@@ -35,8 +47,6 @@
 		Math.round(valor.daily[1].temp.max) + 'º' + ' / ' + Math.round(valor.daily[1].temp.min) + 'º';
 	let minMaxSig =
 		Math.round(valor.daily[2].temp.max) + 'º' + ' / ' + Math.round(valor.daily[2].temp.min) + 'º';
-
-	let siguiente = 'siguiente';
 
 	let linkImage = `https://openweathermap.org/img/wn/${valor.current.weather[0].icon}@2x.png`;
 
@@ -82,7 +92,7 @@
 			</div>
 		</div>
 	</div>
-	<button type="button" class="btn variant-filled" on:click={() => (detailed = true)}>Hola</button>
+	<button type="button" class="btn variant-filled" on:click={() => (detailed = true)}>Detallado</button>
 </main>
 
 <style>
