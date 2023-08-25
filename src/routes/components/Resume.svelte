@@ -3,6 +3,9 @@
 	import { LightSwitch } from '@skeletonlabs/skeleton';
 	import { numero } from '../stores/store.js'
 
+	import Data from './Data.svelte'
+	import Detailed from './Detailed.svelte'
+
 	export let visible;
 	export let detailed;
 
@@ -25,7 +28,7 @@
 	let minMaxTom = '';
 	let minMaxSig = '';
 
-	let contenido = false;
+	export let contenido = false;
 
 	let latLong = [];
 	let que = '';
@@ -42,22 +45,7 @@
 		siguiente = dias[1];
 	}
 
-	function translateDescription(description) {
-		var xhttp = new XMLHttpRequest();
-		xhttp.open(
-			'GET',
-			'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=es&dt=t&q=' +
-				description,
-			false
-		);
-		xhttp.send();
-		var response = JSON.parse(xhttp.responseText);
-		return response[0][0][0];
-	}
-
-	function capitalizeFirstLetter(string) {
-		return string.charAt(0).toUpperCase() + string.slice(1);
-	}
+	
 
 	async function getCoord() {
 		let que;
@@ -92,7 +80,7 @@
 			latLong[1] = que[0].longitude;
 
 			getClima(que[0].latitude, que[0].longitude);
-			contenido = true;
+			
 		} catch (Error) {
 			contenido = false;
 			estado.classList.add('variant-soft-error');
@@ -131,7 +119,11 @@
 
 		actualizar()
 
-		estado.classList.remove('variant-soft-error');
+		console.log(valor)
+
+		contenido = true;
+
+		/* estado.classList.remove('variant-soft-error');
 		estado.classList.remove('mt-2');
 
 		let icono = document.getElementById('iconoTiempo');
@@ -147,12 +139,12 @@
 			Math.round(valor.daily[1].temp.max) + 'º' + ' / ' + Math.round(valor.daily[1].temp.min) + 'º';
 		minMaxSig =
 			Math.round(valor.daily[2].temp.max) + 'º' + ' / ' + Math.round(valor.daily[2].temp.min) + 'º';
-		tiempo = capitalizeFirstLetter(translateDescription(valor.current.weather[0].main));
+		tiempo = capitalizeFirstLetter(translateDescription(valor.current.weather[0].main)); */
 	}
 </script>
 
 <main>
-	<div id="tarjeta" class="card p-4 variant-soft max-w-md grid place-items-center gap-10">
+	<div id="tarjeta" class="card p-4 variant-soft max-w-md grid place-items-center">
 		<div id="header" class="header p-4">
 			<div id="toggle" class="iconHeader grid place-self-center -ml-6">
 				<LightSwitch />
@@ -175,45 +167,11 @@
 		</div>
 
 		{#if contenido}
-			<div class="grid place-items-center grid-cols-2">
-				<div class="variant-soft rounded-full">
-					<img id="iconoTiempo" src="" alt="" />
-				</div>
-				<div class="grid place-items-center">
-					<div class="grid">
-						<p class="text-4xl">{temp}</p>
-					</div>
-					<p class="text-lg">{tiempo}</p>
-				</div>
-			</div>
-
-			<div class="grid w-3/4 text-xl gap-2 p-4">
-				<div class="resume">
-					<div class="grid">
-						<p>Hoy</p>
-					</div>
-					<div class="temp">
-						<p>{minMaxHoy}</p>
-					</div>
-				</div>
-				<div class="resume">
-					<div>
-						<p>Mañana</p>
-					</div>
-					<div class="temp">
-						<p>{minMaxTom}</p>
-					</div>
-				</div>
-				<div class="resume">
-					<div>
-						<p>{siguiente}</p>
-					</div>
-					<div class="temp">
-						<p>{minMaxSig}</p>
-					</div>
-				</div>
-			</div>
-			<button type="button" class="btn variant-filled" on:click={() => (detailed = true)}>Hola</button>
+			{#if detailed}
+				<Detailed bind:detailed />
+			{:else}
+				<Data bind:detailed />
+			{/if}
 		{/if}
 	</div>
 </main>
@@ -234,15 +192,7 @@
 		height: 100%;
 	}
 
-	.resume {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-	}
-
-	.temp {
-		display: grid;
-		place-items: end;
-	}
+	
 
 	#buscador {
 		cursor: pointer;

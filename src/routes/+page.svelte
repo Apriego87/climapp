@@ -12,16 +12,9 @@
 		<div id="alert">
 			<Alert bind:visible />
 		</div>
-		{#if detailed}
-		<div id="detailed">
-			<Detailed bind:detailed />
-			
-		</div>
-		{:else}
 		<div id="busc">
 			<Resume bind:visible bind:detailed />
 		</div>
-		{/if}
 	</div>
 </main>
 
