@@ -36,9 +36,9 @@
 <main class="grid place-items-center gap-2" >
 	<div id="cont">
 		{#each arrayTemps as temp, index}
-			<div class="temper m-4 text-center grid gap-2">
+			<div class="temper m-4 text-center grid gap-2 place-items-center">
 				{arrayHoras[index] + 'h'}
-				<div class="variant-soft rounded-full">
+				<div id="img" class="variant-soft rounded-full ">
 					<img
 						src={`https://openweathermap.org/img/wn/${arrayImages[index]}@2x.png`}
 						alt="coño gordo"
@@ -65,9 +65,10 @@
 		height: auto;
 	}
 
-	img {
-		width: 100%;
+	#img {
+		width: 75%;
 		height: auto;
+		max-width: 100px;
 	}
 
 	.temper {
