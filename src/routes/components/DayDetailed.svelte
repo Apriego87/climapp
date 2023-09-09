@@ -60,7 +60,7 @@
 							</div>
 
 							<div class="dato">
-								<p>Lluvia: <br /> {item.pop * 100}%</p>
+								<p>Lluvia: <br /> {Math.round(item.pop * 100)}%</p>
 							</div>
 
 							<div class="dato">
