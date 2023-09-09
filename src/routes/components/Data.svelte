@@ -38,6 +38,13 @@
 		return string.charAt(0).toUpperCase() + string.slice(1);
 	}
 
+	function getDayName(dia) {
+		let quepasa = new Date(valor.daily[dia].dt * 1000);
+		let fecha = '' + (quepasa.getMonth() + 1) + '/' + quepasa.getDate() + '/' + quepasa.getFullYear();
+		let date = new Date(fecha);
+		return date.toLocaleDateString('es-ES', { weekday: 'long' });
+	}
+
 	let temp = Math.round(valor.current.temp) + 'º';
 	let tiempo = capitalizeFirstLetter(translateDescription(valor.current.weather[0].main));
 
@@ -59,7 +66,11 @@
 <main>
 	<div class="grid place-items-center grid-cols-2">
 		<div class="variant-soft rounded-full">
-			<img id="iconoTiempo" src={`https://openweathermap.org/img/wn/${valor.current.weather[0].icon}@2x.png`} alt="" />
+			<img
+				id="iconoTiempo"
+				src={`https://openweathermap.org/img/wn/${valor.current.weather[0].icon}@2x.png`}
+				alt=""
+			/>
 		</div>
 		<div class="grid place-items-center">
 			<div class="grid">
@@ -80,7 +91,10 @@
 				</div>
 
 				<div class="grid place-items-center">
-					<img class="imageSide" src={`https://openweathermap.org/img/wn/${valor.daily[0].weather[0].icon}@2x.png`} />
+					<img
+						class="imageSide"
+						src={`https://openweathermap.org/img/wn/${valor.daily[0].weather[0].icon}@2x.png`}
+					/>
 				</div>
 
 				<div class="temp">
@@ -95,7 +109,10 @@
 					<p>Mañana</p>
 				</div>
 				<div class="grid place-items-center">
-					<img class="imageSide" src={`https://openweathermap.org/img/wn/${valor.daily[1].weather[0].icon}@2x.png`} />
+					<img
+						class="imageSide"
+						src={`https://openweathermap.org/img/wn/${valor.daily[1].weather[0].icon}@2x.png`}
+					/>
 				</div>
 				<div class="temp">
 					<p>{minMaxTom}</p>
@@ -103,17 +120,33 @@
 			</div>
 			{#each { length: 6 } as _, i}
 				<div
-					class="resume variant-soft rounded-full  cursor-pointer"
-					on:click={() => ((componente = 'dayDetailed'), (params = [dias[i + 1], `https://openweathermap.org/img/wn/${valor.daily[i+2].weather[0].icon}@2x.png`, i+2]))}
+					class="resume variant-soft rounded-full cursor-pointer"
+					on:click={() => (
+						(componente = 'dayDetailed'),
+						(params = [
+							capitalizeFirstLetter(getDayName(i + 2)),
+							`https://openweathermap.org/img/wn/${valor.daily[i + 2].weather[0].icon}@2x.png`,
+							i + 2
+						])
+					)}
 				>
 					<div class="place-self-center">
-						<p>{dias[i + 1]}</p>
+						<p>{capitalizeFirstLetter(getDayName(i + 2))}</p>
 					</div>
 					<div class="grid place-items-center">
-						<img class="imageSide" src={`https://openweathermap.org/img/wn/${valor.daily[i+2].weather[0].icon}@2x.png`} />
+						<img
+							class="imageSide"
+							src={`https://openweathermap.org/img/wn/${valor.daily[i + 2].weather[0].icon}@2x.png`}
+						/>
 					</div>
 					<div class="temp">
-						<p>{Math.round(valor.daily[i+2].temp.max) + 'º' + '/' + Math.round(valor.daily[i+2].temp.min) + 'º'}</p>
+						<p>
+							{Math.round(valor.daily[i + 2].temp.max) +
+								'º' +
+								'/' +
+								Math.round(valor.daily[i + 2].temp.min) +
+								'º'}
+						</p>
 					</div>
 				</div>
 			{/each}
