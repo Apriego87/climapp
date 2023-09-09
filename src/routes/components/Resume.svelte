@@ -1,32 +1,21 @@
 <script type="js">
 	import FaMapMarkerAlt from 'svelte-icons/fa/FaMapMarkerAlt.svelte';
 	import { LightSwitch } from '@skeletonlabs/skeleton';
-	import { numero } from '../stores/store.js'
+	import { numero } from '../stores/store.js';
 
-	import Data from './Data.svelte'
-	import Detailed from './Detailed.svelte'
+	import Data from './Data.svelte';
+	import Hourly from './Hourly.svelte';
+	import DayDetailed from './DayDetailed.svelte';
 
 	export let visible;
-	export let detailed;
+	export let componente;
+	export let params;
 
 	let valor;
 
 	numero.subscribe((value) => {
-		valor = value
-	})
-
-	
-	let url = ''
-
-	/* const [data, loading, error, get] = fetchStore(url) */
-
-
-	let tiempo = '';
-	let temp = '';
-
-	let minMaxHoy = '';
-	let minMaxTom = '';
-	let minMaxSig = '';
+		valor = value;
+	});
 
 	export let contenido = false;
 
@@ -45,8 +34,6 @@
 		siguiente = dias[1];
 	}
 
-	
-
 	async function getCoord() {
 		let que;
 		let city = document.getElementById('ciudad');
@@ -64,7 +51,7 @@
 		estado.classList.add('p-2');
 		estado.innerHTML = 'Buscando...';
 		visible = false;
-		console.log(visible)
+		console.log(visible);
 
 		try {
 			const res = await fetch(`https://api.api-ninjas.com/v1/geocoding?city=${city.value}`, {
@@ -80,7 +67,6 @@
 			latLong[1] = que[0].longitude;
 
 			getClima(que[0].latitude, que[0].longitude);
-			
 		} catch (Error) {
 			contenido = false;
 			estado.classList.add('variant-soft-error');
@@ -92,7 +78,7 @@
 
 	async function getClima(lat, long) {
 		const res = await fetch(
-			`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&units=metric&appid=19dc48a3b6452ccad728e8813e9f2a86`,
+			`https://api.openweathermap.org/data/2.8/onecall?lat=${lat}&lon=${long}&units=metric&appid=19dc48a3b6452ccad728e8813e9f2a86`,
 			{
 				method: 'GET',
 				headers: {
@@ -109,17 +95,15 @@
 
 		que = await res.json();
 
-		console.log(valor)
+		console.log(valor);
 
 		function actualizar() {
-			numero.update(
-				n => que
-			)
+			numero.update((n) => que);
 		}
 
-		actualizar()
+		actualizar();
 
-		console.log(valor)
+		console.log(valor);
 
 		contenido = true;
 
@@ -167,10 +151,14 @@
 		</div>
 
 		{#if contenido}
-			{#if detailed}
-				<Detailed bind:detailed />
+			{#if componente === 'data'}
+				<Data bind:componente bind:params />
+			{:else if componente === 'dayDetailed'}
+				<DayDetailed bind:componente bind:params />
+			{:else if componente === 'hourly'}
+				<Hourly bind:componente />
 			{:else}
-				<Data bind:detailed />
+				<Data bind:componente bind:params />
 			{/if}
 		{/if}
 	</div>
@@ -191,8 +179,6 @@
 		width: 100%;
 		height: 100%;
 	}
-
-	
 
 	#buscador {
 		cursor: pointer;

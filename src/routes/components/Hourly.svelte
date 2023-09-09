@@ -1,13 +1,18 @@
 <script>
 	import { numero } from '../stores/store.js';
-	export let detailed;
+	export let componente;
 
-	let valor;
+	let delay = 500
+
+	/* in:fade={{x: -100, delay}} out:scale|local */
+
+	
 
 	let arrayTemps = [];
 	let arrayImages = [];
 	let arrayHoras = [];
-
+	
+	let valor;
 	numero.subscribe((value) => {
 		valor = value;
 	});
@@ -28,7 +33,7 @@
 	}
 </script>
 
-<main class="grid place-items-center gap-2">
+<main class="grid place-items-center gap-2" >
 	<div id="cont">
 		{#each arrayTemps as temp, index}
 			<div class="temper m-4 text-center grid gap-2">
@@ -44,7 +49,7 @@
 		{/each}
 	</div>
 </main>
-<button type="button" class="btn variant-filled mt-4" on:click={() => (detailed = false)}
+<button type="button" class="btn variant-filled mt-4" on:click={() => (componente = 'data')}
 	>Resumen</button
 >
 

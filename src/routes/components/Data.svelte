@@ -1,13 +1,15 @@
 <script>
 	import { numero } from '../stores/store.js';
 
-	let valor;
+	export let componente;
+	export let params;
 
+	let valor;
 	numero.subscribe((value) => {
 		valor = value;
 	});
 
-	console.log(valor.lat);
+	
 
 	let d = new Date();
 	let hoy = d.getDay();
@@ -42,15 +44,18 @@
 	let tiempo = capitalizeFirstLetter(translateDescription(valor.current.weather[0].main));
 
 	let minMaxHoy =
-		Math.round(valor.daily[0].temp.max) + 'º' + ' / ' + Math.round(valor.daily[0].temp.min) + 'º';
+		Math.round(valor.daily[0].temp.max) + 'º' + '/' + Math.round(valor.daily[0].temp.min) + 'º';
 	let minMaxTom =
-		Math.round(valor.daily[1].temp.max) + 'º' + ' / ' + Math.round(valor.daily[1].temp.min) + 'º';
+		Math.round(valor.daily[1].temp.max) + 'º' + '/' + Math.round(valor.daily[1].temp.min) + 'º';
 	let minMaxSig =
-		Math.round(valor.daily[2].temp.max) + 'º' + ' / ' + Math.round(valor.daily[2].temp.min) + 'º';
+		Math.round(valor.daily[2].temp.max) + 'º' + '/' + Math.round(valor.daily[2].temp.min) + 'º';
 
 	let linkImage = `https://openweathermap.org/img/wn/${valor.current.weather[0].icon}@2x.png`;
+	let imageHoy = `https://openweathermap.org/img/wn/${valor.daily[0].weather[0].icon}@2x.png`;
+	let imageTom = `https://openweathermap.org/img/wn/${valor.daily[1].weather[0].icon}@2x.png`;
+	let imageSig = `https://openweathermap.org/img/wn/${valor.daily[2].weather[0].icon}@2x.png`;
 
-	export let detailed;
+	/* in:fade={{x: -100, delay}} out:scale|local */
 </script>
 
 <main>
@@ -66,49 +71,68 @@
 		</div>
 	</div>
 
-	<div class="grid w-3/4 text-xl gap-2 p-4">
-		<div class="resume">
-			<div class="grid">
+	<div class="grid w-full text-xl gap-2 p-4">
+		<div class="resume1 variant-soft rounded-full p-1 mb-1 cursor-pointer" on:click={() => (componente = 'dayDetailed', params = ["Hoy", imageHoy, 0])}>
+			<div class="place-self-center">
 				<p>Hoy</p>
 			</div>
+
+			<div class="grid place-items-center">
+				<img class="imageSide" src={imageHoy} />
+			</div>
+
 			<div class="temp">
 				<p>{minMaxHoy}</p>
 			</div>
 		</div>
-		<div class="resume">
-			<div>
+		<div class="resume1 variant-soft rounded-full p-1 mb-1 cursor-pointer" on:click={() => (componente = 'dayDetailed', params = ["Mañana", imageTom, 1])}>
+			<div class="place-self-center">
 				<p>Mañana</p>
+			</div>
+			<div class="grid place-items-center">
+				<img class="imageSide" src={imageTom} />
 			</div>
 			<div class="temp">
 				<p>{minMaxTom}</p>
 			</div>
 		</div>
-		<div class="resume">
-			<div>
+		<div class="resume1 variant-soft rounded-full p-1 mb-1 cursor-pointer" on:click={() => (componente = 'dayDetailed', params = [siguiente, imageSig, 2])}>
+			<div class="place-self-center">
 				<p>{siguiente}</p>
+			</div>
+			<div class="grid place-items-center">
+				<img class="imageSide" src={imageSig} />
 			</div>
 			<div class="temp">
 				<p>{minMaxSig}</p>
 			</div>
 		</div>
 	</div>
-	<button type="button" class="btn variant-filled" on:click={() => (detailed = true)}>Detallado</button>
+	<button type="button" class="btn variant-filled" on:click={() => (componente = 'hourly')}
+		>Por Horas</button
+	>
 </main>
 
 <style>
-	.resume {
+	.resume1 {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: 1fr 0.5fr 1fr;
 	}
 
 	.temp {
 		display: grid;
-		place-items: end;
+		place-items: center;
 	}
 
 	main {
 		width: 100%;
-        display: grid;
-        place-items: center;
+		display: grid;
+		place-items: center;
+	}
+
+	.imageSide {
+		width: 100%;
+		max-width: 100%;
+		height: auto;
 	}
 </style>

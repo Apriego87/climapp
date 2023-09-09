@@ -4,7 +4,7 @@
 
 	let msg1 = 'Ésta es una aplicación para comprobar el tiempo.';
 	let msg2 =
-		'Simplemente introduce el nombre de la ciudad que quieras buscar, y pulsa en el icono de la izquierda :)';
+		'Simplemente introduce el nombre de la ciudad que quieras buscar, y pulsa en el icono de la derecha :)';
 
 	setTimeout(() => {
 		visible = true;

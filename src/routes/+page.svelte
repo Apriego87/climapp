@@ -1,10 +1,12 @@
 <script type="js">
 	import Alert from './components/Alert.svelte';
-	import Detailed from './components/Detailed.svelte';
+	
+	/* import Hourly from './components/Hourly.svelte'; */
 	import Resume from './components/Resume.svelte';
 
 	let visible = false;
-	let detailed = false;
+	let componente;
+	let params;
 </script>
 
 <main>
@@ -13,7 +15,7 @@
 			<Alert bind:visible />
 		</div>
 		<div id="busc">
-			<Resume bind:visible bind:detailed />
+			<Resume bind:visible bind:componente bind:params />
 		</div>
 	</div>
 </main>
