@@ -117,6 +117,7 @@
 	<!-- div contenedor del resumen -->
 	<div id="tarjeta" class="card p-4 variant-soft max-w-md grid place-items-center">
 		<!-- div con el header, que mostrará el interruptor de modo claro/oscuro, botón y barra de búsqueda -->
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div id="header" class="header p-4">
 			<div id="toggle" class="iconHeader grid place-self-center -ml-6">
 				<LightSwitch />
@@ -131,6 +132,8 @@
 					/>
 				</h1>
 			</div>
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<!-- svelte-ignore a11y-no-static-element-interactions -->
 			<div id="buscador" class="iconHeader -mr-6" on:click={getCoord}>
 				<FaMapMarkerAlt />
 			</div>
