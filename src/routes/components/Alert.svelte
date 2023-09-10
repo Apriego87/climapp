@@ -1,18 +1,23 @@
 <script>
+	// transiciones y variable para hacer visible la alerta
 	import { fade, scale } from 'svelte/transition';
 	export let visible;
 
+	// texto de la alerta
 	let msg1 = 'Ésta es una aplicación para comprobar el tiempo.';
 	let msg2 =
 		'Simplemente introduce el nombre de la ciudad que quieras buscar, y pulsa en el icono de la derecha :)';
 
+	// función del delay de la alerta
 	setTimeout(() => {
 		visible = true;
 	}, 1000);
 </script>
 
 <main>
+	<!-- cambiar visibilidad de la alerta -->
 	{#if visible}
+		<!-- div contenedor de la alerta -->
 		<div id="alerta">
 			<aside
 				id="aside"
@@ -20,16 +25,16 @@
 				in:fade
 				out:scale|local
 			>
-				<!-- Message -->
+				<!-- mensaje -->
 				<div class="alert-message">
 					<h3 class="h3">Hola!</h3>
 					<p>{msg1}</p>
 					<p>{msg2}</p>
 				</div>
-				<!-- Actions -->
+				<!-- acciones -->
 				<div class="alert-actions">
 					<button type="button" class="btn variant-filled" on:click={() => (visible = false)}
-						>Que sí pesao</button
+						>Aceptar</button
 					>
 				</div>
 			</aside>
@@ -40,10 +45,6 @@
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
 
-	:global(img) {
-		width: 100%;
-		height: 100%;
-	}
 	#aside {
 		width: auto;
 		max-width: 75%;
@@ -55,8 +56,6 @@
 	#alerta {
 		display: grid;
 		place-items: center;
-		/* position: absolute;
-		top: 0; */
 		max-width: 100%;
 		min-width: 35vw;
 	}

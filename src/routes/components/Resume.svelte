@@ -1,44 +1,42 @@
 <script type="js">
+	// imports de los iconos y la variable para almacenar los datos en el store
 	import FaMapMarkerAlt from 'svelte-icons/fa/FaMapMarkerAlt.svelte';
 	import { LightSwitch } from '@skeletonlabs/skeleton';
 	import { numero } from '../stores/store.js';
 
+	// imports de los componentes
 	import Data from './Data.svelte';
 	import Hourly from './Hourly.svelte';
 	import DayDetailed from './DayDetailed.svelte';
 
+	// variables que se pasan a los componentes
 	export let visible;
 	export let componente;
 	export let params;
 
+	// formateo de la variable para almacenar los datos
 	let valor;
-
 	numero.subscribe((value) => {
 		valor = value;
 	});
 
+	// variable que cambiará si se ha introducido una ciudad correctamente
 	export let contenido = false;
 
+	// latLong almacenará latitud y longitud de la ciudad que busquemos
 	let latLong = [];
-	let que = '';
 
-	let d = new Date();
-	let hoy = d.getDay();
-	let dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+	// variable que guarda (temporalmente) los datos recolectados
+	let datos = '';
 
-	let siguiente = dias[hoy + 2];
-
-	if (hoy === 5) {
-		siguiente = dias[0];
-	} else if (hoy === 6) {
-		siguiente = dias[1];
-	}
-
+	// función para sacar las coordenadas de la ciudad introducida
 	async function getCoord() {
-		let que;
+
+		// para formatear el aspecto de la barra y la etiqueta de estado en caso de error
 		let city = document.getElementById('ciudad');
 		let estado = document.getElementById('estado');
 
+		// si está vacío, no hacer nada
 		if (city.value === '') {
 			city.classList.add('variant-soft');
 			city.classList.remove('variant-soft-error');
@@ -47,13 +45,15 @@
 			return null;
 		}
 
+		// quitar el color de error (si estuviera), indicar que está buscando, y ocultar la alerta de instrucciones
 		estado.classList.remove('variant-soft-error');
 		estado.classList.add('p-2');
 		estado.innerHTML = 'Buscando...';
 		visible = false;
-		console.log(visible);
 
+		// bloque para buscar las coordenadas, y capturar error (si hubiera)
 		try {
+			// petición
 			const res = await fetch(`https://api.api-ninjas.com/v1/geocoding?city=${city.value}`, {
 				method: 'GET',
 				headers: {
@@ -61,13 +61,19 @@
 				}
 			});
 
-			que = await res.json();
+			// pasar datos a JSON
+			datos = await res.json();
 
-			latLong[0] = que[0].latitude;
-			latLong[1] = que[0].longitude;
+			// rellenar array con latitud y longitud
+			latLong[0] = datos[0].latitude;
+			latLong[1] = datos[0].longitude;
 
-			getClima(que[0].latitude, que[0].longitude);
-		} catch (Error) {
+			// llamar a la función para obtener los datos (declarada abajo)
+			getClima(datos[0].latitude, datos[0].longitude);
+		} 
+		// recoger error (si hubiera)
+		catch (Error) {
+			// no mostrar layout de datos, y añadir color y texto de error
 			contenido = false;
 			estado.classList.add('variant-soft-error');
 			estado.classList.add('p-2');
@@ -76,7 +82,9 @@
 		}
 	}
 
+	// función que obtiene datos climatológicos en base a latitud y longitud
 	async function getClima(lat, long) {
+		// petición de datos
 		const res = await fetch(
 			`https://api.openweathermap.org/data/2.8/onecall?lat=${lat}&lon=${long}&units=metric&appid=19dc48a3b6452ccad728e8813e9f2a86`,
 			{
@@ -86,49 +94,29 @@
 				}
 			}
 		);
+
+		// resetear texto de la etiqueta (si hubiera)
 		estado.innerHTML = '';
 
-		/* let url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&units=metric&appid=19dc48a3b6452ccad728e8813e9f2a86` */
+		// parsear datos a JSON
+		datos = await res.json();
 
-		/* const [data, loading, error, get] = fetchStore(url) */
-		/* que = JSON.stringify($data, null, 2) */
-
-		que = await res.json();
-
-		console.log(valor);
-
+		// pasar los datos de la variable temporal al store
 		function actualizar() {
-			numero.update((n) => que);
+			numero.update((n) => datos);
 		}
 
 		actualizar();
 
-		console.log(valor);
-
+		// variable que mostrará el layout de resumen
 		contenido = true;
-
-		/* estado.classList.remove('variant-soft-error');
-		estado.classList.remove('mt-2');
-
-		let icono = document.getElementById('iconoTiempo');
-		let ico = valor.current.weather[0].icon;
-
-		icono.src = `https://openweathermap.org/img/wn/${ico}@2x.png`;
-		console.log(que);
-		temp = Math.round(valor.current.temp) + 'º';
-
-		minMaxHoy =
-			Math.round(valor.daily[0].temp.max) + 'º' + ' / ' + Math.round(valor.daily[0].temp.min) + 'º';
-		minMaxTom =
-			Math.round(valor.daily[1].temp.max) + 'º' + ' / ' + Math.round(valor.daily[1].temp.min) + 'º';
-		minMaxSig =
-			Math.round(valor.daily[2].temp.max) + 'º' + ' / ' + Math.round(valor.daily[2].temp.min) + 'º';
-		tiempo = capitalizeFirstLetter(translateDescription(valor.current.weather[0].main)); */
 	}
 </script>
 
 <main>
+	<!-- div contenedor del resumen -->
 	<div id="tarjeta" class="card p-4 variant-soft max-w-md grid place-items-center">
+		<!-- div con el header, que mostrará el interruptor de modo claro/oscuro, botón y barra de búsqueda -->
 		<div id="header" class="header p-4">
 			<div id="toggle" class="iconHeader grid place-self-center -ml-6">
 				<LightSwitch />
@@ -147,9 +135,13 @@
 				<FaMapMarkerAlt />
 			</div>
 
-			<p id="label"><label class="w-full text-center rounded-xl" for="estado" id="estado" /></p>
+			<!-- etiqueta que mostrará el estado de la búsqueda -->
+			<p id="label">
+				<label class="w-full text-center rounded-xl" for="estado" id="estado" />
+			</p>
 		</div>
 
+		<!-- dependiendo de si se han encontrado datos o no, se mostrarán los distintos componentes -->
 		{#if contenido}
 			{#if componente === 'data'}
 				<Data bind:componente bind:params />

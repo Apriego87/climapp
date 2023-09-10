@@ -1,19 +1,22 @@
 <script type="js">
+	// importar componentes
 	import Alert from './components/Alert.svelte';
-	
-	/* import Hourly from './components/Hourly.svelte'; */
 	import Resume from './components/Resume.svelte';
 
+	// variables que luego se pasan a los componentes
 	let visible = false;
 	let componente;
 	let params;
 </script>
 
 <main>
+	<!-- contenedor de la alerta y el buscador -->
 	<div id="cont" class="grid p-4 place-items-center max-w-full h-screen">
+		<!-- alerta -->
 		<div id="alert">
 			<Alert bind:visible />
 		</div>
+		<!-- buscador -->
 		<div id="busc">
 			<Resume bind:visible bind:componente bind:params />
 		</div>
